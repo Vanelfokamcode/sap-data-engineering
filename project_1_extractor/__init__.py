@@ -1,9 +1,17 @@
 from dagster import Definitions, load_assets_from_modules
 import os
-from project_1_extractor.assets import business_partners, gl_accounts
+from project_1_extractor.assets import (
+    business_partners,
+    gl_accounts,
+    journal_entry_items,
+)
 from project_1_extractor.resources.hana_resource import HanaCloudResource
 
-all_assets = load_assets_from_modules([business_partners, gl_accounts])
+all_assets = load_assets_from_modules([
+    business_partners,
+    gl_accounts,
+    journal_entry_items,
+])
 
 defs = Definitions(
     assets=all_assets,

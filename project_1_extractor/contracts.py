@@ -1,5 +1,7 @@
 from pydantic import BaseModel, field_validator
 from typing import Optional
+from decimal import Decimal
+
 
 class BusinessPartnerContract(BaseModel):
     business_partner: str
@@ -47,3 +49,38 @@ class GLAccountContract(BaseModel):
         if isinstance(v, str):
             return v == "X"
         return bool(v)
+
+class JournalEntryItemContract(BaseModel):
+    """Contrat pour une ligne d'écriture FICO."""
+    company_code:                str
+    ledger_fiscal_year:          str
+    journal_entry:               str
+    journal_entry_item:          str
+    gl_account:                  Optional[str] = None
+    amount_in_company_code_currency: Optional[Decimal] = None
+    company_code_currency:       Optional[str] = None
+    debit_credit_code:           Optional[str] = None
+    ledger:                      Optional[str] = None
+    cost_center:                 Optional[str] = None
+
+    @field_validator("company_code")
+    @classmethod
+    def valid_company_code(cls, v):
+        if len(v) > 4:
+            raise ValueError(f"CompanyCode trop long: {v}")
+        return v
+
+    @field_validator("debit_credit_code")
+    @classmethod
+    def valid_dc_code(cls, v):
+        # SAP: "H" = Haben (Crédit), "S" = Soll (Débit)
+        if v and v not in ["H", "S", ""]:
+            raise ValueError(f"DebitCredit invalide: {v}")
+        return v
+
+    @field_validator("amount_in_company_code_currency", mode="before")
+    @classmethod
+    def parse_amount(cls, v):
+        if v is None or v == "": return None
+        try: return Decimal(str(v))
+        except: return None
