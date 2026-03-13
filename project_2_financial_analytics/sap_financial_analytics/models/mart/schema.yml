@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: fct_journal_entries
+    description: "Journal Entries enrichies avec noms de comptes GL — table analytique principale"
+    columns:
+      - name: journal_entry_item_id
+        description: "Clé primaire"
+        tests:
+          - not_null
+          - unique
+      - name: company_code
+        description: "Code société SAP"
+        tests:
+          - not_null
+      - name: fiscal_year
+        description: "Exercice fiscal"
+        tests:
+          - not_null
+      - name: gl_account
+        description: "Numéro de compte GL"
+      - name: gl_account_name
+        description: "Nom du compte GL (NULL si pas de match — données sandbox)"
+      - name: amount
+        description: "Montant en devise locale"
+      - name: currency_code
+        description: "Code devise (ex: EUR)"
+      - name: debit_credit_code
+        description: "H = Crédit (Haben), S = Débit (Soll)"
+      - name: debit_amount
+        description: "Montant si débit, sinon 0"
+      - name: credit_amount
+        description: "Montant si crédit, sinon 0"

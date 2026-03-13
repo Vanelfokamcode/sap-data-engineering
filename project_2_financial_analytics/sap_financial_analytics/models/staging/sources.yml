@@ -1,0 +1,36 @@
+version: 2
+
+sources:
+  - name: sap_raw
+    schema: SAP_RAW
+    description: "Données brutes extraites par Dagster depuis SAP S/4HANA OData"
+    tables:
+      - name: BUSINESS_PARTNERS
+        description: "Business Partners — API_BUSINESS_PARTNER"
+        columns:
+          - name: BUSINESS_PARTNER
+            description: "Clé primaire BP"
+            tests:
+              - not_null
+              - unique
+
+      - name: GL_ACCOUNTS
+        description: "GL Accounts FICO — API_GLACCOUNTINCHARTOFACCOUNTS_SRV"
+        columns:
+          - name: GL_ACCOUNT
+            description: "Numéro de compte GL"
+            tests:
+              - not_null
+
+      - name: JOURNAL_ENTRY_ITEMS
+        description: "Journal Entry Items FICO — API_JOURNALENTRYITEMBASIC_SRV"
+        columns:
+          - name: ROW_ID
+            description: "Clé primaire générée"
+            tests:
+              - not_null
+              - unique
+          - name: COMPANY_CODE
+            description: "Code société SAP (ex: 1010)"
+            tests:
+              - not_null
