@@ -214,3 +214,10 @@ marimo/_lsp/
 __marimo__/
 >>>>>>> 3095bdc2547d41b0418b3d0d9c5d366ad4e70e44
 wake_hana.sh
+
+# dbt
+target/
+dbt_packages/
+logs/
+.user.yml
+profiles.yml
