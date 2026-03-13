@@ -1,0 +1,22 @@
+name: sap_financial_analytics
+version: '1.0.0'
+config-version: 2
+
+profile: sap_financial_analytics
+
+model-paths: ["models"]
+test-paths: ["tests"]
+analysis-paths: ["analyses"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  sap_financial_analytics:
+    staging:
+      +schema: SAP_STAGING
+      +materialized: view
+    mart:
+      +schema: SAP_MART
+      +materialized: table
