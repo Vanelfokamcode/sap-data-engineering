@@ -31,3 +31,22 @@ models:
         description: "Montant si débit, sinon 0"
       - name: credit_amount
         description: "Montant si crédit, sinon 0"
+
+  - name: fct_balance_sheet
+    description: "Balance Sheet SAP simplifie -- comptes de bilan agregés par GL Account"
+    columns:
+      - name: company_code
+        description: "Code societe SAP"
+        tests:
+          - not_null
+      - name: gl_account
+        description: "Numero de compte GL"
+        tests:
+          - not_null
+      - name: net_balance
+        description: "Solde net = total_debit - total_credit"
+      - name: balance_type
+        description: "ASSET si net_balance >= 0, LIABILITY sinon"
+        tests:
+          - accepted_values:
+              values: ['ASSET', 'LIABILITY']
