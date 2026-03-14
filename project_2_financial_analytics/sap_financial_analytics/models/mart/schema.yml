@@ -50,3 +50,20 @@ models:
         tests:
           - accepted_values:
               values: ['ASSET', 'LIABILITY']
+
+  - name: fct_variance_analysis
+    description: "Variance Analysis SAP -- Actuel vs Budget par compte GL"
+    columns:
+      - name: company_code
+        tests:
+          - not_null
+      - name: gl_account
+        tests:
+          - not_null
+      - name: budget_status
+        description: "OVER_BUDGET, UNDER_BUDGET ou ON_BUDGET"
+        tests:
+          - accepted_values:
+              values: ['OVER_BUDGET', 'UNDER_BUDGET', 'ON_BUDGET']
+      - name: variance_amount
+        description: "Actuel - Budget. Positif = depasse le budget."
